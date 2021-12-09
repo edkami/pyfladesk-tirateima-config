@@ -21,71 +21,23 @@
                     </div>
                 </div>
             </div>
-            <!-- Cabeçalho Fullscreen -->
-            <div>
-                <div class="pd-20 card-box mb-30">
-                    <div class="clearfix">
-                        <div class="pull-left">
-                            <h4 class="text-blue h4">Propaganda FullScreen</h4>
-                            <p class="mb-30">Imagens que ocuparão toda a Tela.</p>
-                        </div>
-                    </div>
-                    <form action=" {{url_for('gravar_scr')}} " method="POST" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <div class="col-sm-9">
-                                <div> <h5> Imagens anteriores</h5></div>
-                                <div class="dropdown">
-                                    <button type="button" id="dropdownfs" class="btn btn-primary btn-lg dropdown-toggle"
-                                            data-bs-toggle="dropdown"  aria-expanded="false">
-                                        {% if lfs|length > 0 %}
-                                            Imagens contidas
-                                            <span class="badge bg-primary rounded-pill">{{ lfs|length }}</span>
-                                        {% else %}
-                                            Não existe nenhuma imagem
-                                        {% endif %}
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownfs">
-                                        {% if lfs|length > 0 %}
-                                            {% for image in lfs %}
-                                                <li><a class="dropdown-item disabled" href="#">{{ image }}</a></li>
-                                            {% endfor %}
-                                            <li><hr class="dropdown-divider"></li>
-                                            <li><a class="dropdown-item" href="/alerta/fs">Excluir Imagens</a></li>
-                                        {% endif %}
-                                    </ul>
-                                </div>
-                                <br>
-                                <div><h5>Adicionar Novas Imagens</h5></div>
-                                <div>
-                                    <span class="btn btn-default btn-file">
-                                        <input id="img-scr" name="img-scr[]" type="file" class="file" multiple data-show-upload="true" data-show-caption="true">
-                                    </span>
-                                </div>
-                                 <div>
-                                    <input class="btn btn-primary btn-lg " id="submit1"
-                                       name="submit" type="submit" value="Salvar Novas Imagens">
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
                 <!-- Cabeçalho Tira Teima -->
                 <div class="pd-20 card-box mb-30">
                     <div class="clearfix">
                         <div class="pull-left">
                             <h4 class="text-blue h4">Propaganda Tira-Teima</h4>
-                            <p class="mb-30">Imagens que ocuparão a parte central da tela de Consulta de Preço</p>
+                            <p class="mb-30">Imagem que ocupará a parte central da tela de Consulta de Preço</p>
                         </div>
                     </div>
                     <form action=" {{url_for('gravar_central')}} " method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <div class="col-sm-9">
-                                <div> <h5> Imagens anteriores</h5></div>
+                                <div> <h5> Imagem anterior</h5></div>
                                 <div class="dropdown">
                                     <button type="button" id="dropdownct" class="btn btn-primary btn-lg dropdown-toggle"
                                             data-bs-toggle="dropdown"  aria-expanded="false">
                                         {% if lct|length > 0 %}
-                                            Imagens contidas
+                                            Imagem contida
                                             <span class="badge bg-primary rounded-pill">{{ lct|length }}</span>
                                         {% else %}
                                             Não existe nenhuma imagem
@@ -97,20 +49,20 @@
                                                 <li><a class="dropdown-item disabled" href="#">{{ image }}</a></li>
                                             {% endfor %}
                                             <li><hr class="dropdown-divider"></li>
-                                            <li><a class="dropdown-item" href="/alerta/ct">Excluir Imagens</a></li>
+                                            <li><a class="dropdown-item" href="/alerta/ct">Excluir Imagem</a></li>
                                         {% endif %}
                                     </ul>
                                 </div>
                                 <br>
-                                <div><h5>Adicionar Novas Imagens</h5></div>
+                                <div><h5>Adicionar Nova Imagem</h5></div>
                                 <div>
                                     <span class="btn btn-default btn-file">
-                                        <input id="img-central" name="img-central[]" type="file" class="file" multiple data-show-upload="true" data-show-caption="true">
+                                        <input id="img-central" name="img-central" type="file" class="file" data-show-upload="true" data-show-caption="true">
                                     </span>
                                 </div>
                                  <div>
                                     <input class="btn btn-primary btn-lg " id="submit2"
-                                       name="submit" type="submit" value="Salvar Novas Imagens">
+                                       name="submit" type="submit" value="Salvar Nova Imagem">
                                 </div>
                             </div>
                         </div>
@@ -157,7 +109,7 @@
                                 </div>
                                  <div>
                                     <input class="btn btn-primary btn-lg " id="submit3"
-                                       name="submit" type="submit" value="Salvar Novas Imagens">
+                                       name="submit" type="submit" value="Salvar Nova Imagem">
                                 </div>
                             </div>
                         </div>

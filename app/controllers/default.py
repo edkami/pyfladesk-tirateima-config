@@ -4,8 +4,7 @@ from werkzeug.utils import secure_filename
 from app.controllers.connection_tirateima import queue_leitor
 from app.controllers.connection_testing import teste_ping
 from app.controllers.ler_log_terminal import conecta_terminal
-from app.controllers.consulta_imagens import (lista_fullscreen, excluir_fullscreen, lista_logo, lista_central,
-                                              excluir_central, excluir_logo)
+from app.controllers.consulta_imagens import lista_logo, lista_central, excluir_central, excluir_logo
 from app.controllers.log_app import log_app as log
 from app.controllers.validar_ip import endereco_ip
 from app.controllers.enviar_config import enviar_terminal
@@ -291,7 +290,6 @@ def temporizador():
                                  pdt_ep=form.pdt_ep.data,
                                  pdt_uf=form.pdt_uf.data,
                                  pdt_df=form.pdt_df.data,
-                                 scr_sav=int(form.scr_sav.data * 1000)
                                  )
         try:
             existe = db.session.query(Temporizador.id).filter_by(temp_nome=form.temp_nome.data).first()
@@ -337,9 +335,8 @@ def temporizador():
 def busca_temporizador(edit):
     form = FormTemporizador()
     result = Temporizador.query.filter_by(temp_nome=edit).first()
-    tempo_scrsave = int(result.scr_sav/1000)
     log(" busca_temporizador - Renderização para edição dos dados cadastrais do temporizador.", 'info')
-    return render_template("editartemporizador.html", form=form, dados=result, tempo_scrsave=tempo_scrsave)
+    return render_template("editartemporizador.html", form=form, dados=result)
 
 
 @app.route('/editartemporizador', methods=["POST"])
@@ -352,7 +349,6 @@ def editar_temporizador():
     pdt_ep = retorno.get('pdt_ep')
     pdt_uf = retorno.get('pdt_uf')
     pdt_df = retorno.get('pdt_df')
-    scr_sav = int(retorno.get('scr_sav')) * 1000
     try:
         Temporizador.query.filter_by(temp_nome=temp_nome)\
             .update(dict(temp_nome=temp_nome,
@@ -362,7 +358,6 @@ def editar_temporizador():
                          pdt_ep=pdt_ep,
                          pdt_uf=pdt_uf,
                          pdt_df=pdt_df,
-                         scr_sav=scr_sav
                          ))
         db.session.commit()
         db.session.close()
@@ -581,18 +576,18 @@ def deletar_servidor(edit):
 
 @app.route("/selecionar_imagens")
 def select_images():
-    lfs = lista_fullscreen()
     lct = lista_central()
     llg = lista_logo()
-    log(f' select_images - Renderizando listas de imagens.\n Fullscreen = {lfs}\n Central = {lct}\n Logo = {llg}',
+    log(f' select_images - Renderizando listas de imagens.\n Central = {lct}\n Logo = {llg}',
         'info')
-    return render_template("selectimages.html", lfs=lfs, lct=lct, llg=llg)
+    return render_template("selectimages.html", lct=lct, llg=llg)
 
 
 @app.route("/alerta/<id>")
 def alerta(id):
     dados_dict = {'title': "Alerta de Exclusão!",
-                  'message': f'O sistema irá excluir definitivamente as imagens anteriormente adicionadas!!!<p>Deseja realmente excluir?',
+                  'message': f'O sistema irá excluir definitivamente a imagem anteriormente adicionada!!!'
+                             f'<p>Deseja realmente excluir?',
                   'link_voltar': 'select_images',
                   'btn_voltar': 'Não',
                   'link_env': 'excluir_imagens',
@@ -604,70 +599,44 @@ def alerta(id):
 
 @app.route("/excluir_imagens/<id>", methods=["GET", "POST"])
 def excluir_imagens(id):
-    if id == 'fs':
-        try:
-            retorno = excluir_fullscreen()
-            if retorno:
-                dados_dict = {'title': "Arquivos excluídos com sucesso!",
-                              'message': f'Os arquivos da pasta FullScreen foram excluídos com sucesso.',
-                              'link': 'select_images'
-                              }
-                log(' excluir_imagens - Imagens FullScreen excluídas com sucesso.', 'info')
-                return render_template("sucesso.html", dados=dados_dict)
-            else:
-                dados_dict = {'title': "Falha ao excluir arquivos!",
-                              'message': f"Falha ao excluir os dados da pasta FullScreen.",
-                              'link': 'select_images',
-                              'btn_text': 'Voltar'
-                              }
-                log(' excluir_imagens - Falha ao excluir imagens FullScreen.', 'error')
-                return render_template("falha.html", dados=dados_dict)
-        except Exception as exc:
-            dados_dict = {'title': "Falha ao excluir arquivos!",
-                          'message': f"Falha ao excluir os dados da pasta FullScreen. <p> Motivo: {exc}",
-                          'link': 'select_images',
-                          'btn_text': 'Voltar'
-                          }
-            log(f' excluir_imagens - Falha catastrófica ao excluir imagens FullScreen.\n Motivo: {exc}', 'error')
-            return render_template("falha.html", dados=dados_dict)
-    elif id == 'ct':
+    if id == 'ct':
         try:
             retorno = excluir_central()
             if retorno:
-                dados_dict = {'title': "Arquivos excluídos com sucesso!",
-                              'message': f'Os arquivos da pasta Central foram excluídos com sucesso.',
+                dados_dict = {'title': "Arquivo excluído com sucesso!",
+                              'message': f'O arquivo da pasta Central foi excluído com sucesso.',
                               'link': 'select_images'
                               }
-                log(' excluir_imagens - Imagens Central excluídas com sucesso.', 'info')
+                log(' excluir_imagens - Imagens Central excluída com sucesso.', 'info')
                 return render_template("sucesso.html", dados=dados_dict)
             else:
-                dados_dict = {'title': "Falha ao excluir arquivos!",
-                              'message': f"Falha ao excluir os dados da pasta Central.",
+                dados_dict = {'title': "Falha ao excluir arquivo!",
+                              'message': f"Falha ao excluir o dado da pasta Central.",
                               'link': 'select_images',
                               'btn_text': 'Voltar'
                               }
-                log(' excluir_imagens - Falha ao excluir imagens Central.', 'error')
+                log(' excluir_imagens - Falha ao excluir imagem Central.', 'error')
                 return render_template("falha.html", dados=dados_dict)
         except Exception as exc:
-            dados_dict = {'title': "Falha ao excluir arquivos!",
-                          'message': f"Falha ao excluir os dados da pasta Central. <p> Motivo: {exc}",
+            dados_dict = {'title': "Falha ao excluir arquivo!",
+                          'message': f"Falha ao excluir o dado da pasta Central. <p> Motivo: {exc}",
                           'link': 'select_images',
                           'btn_text': 'Voltar'
                           }
-            log(f' excluir_imagens - Falha catastrófica ao excluir imagens FullScreen.\n Central: {exc}', 'error')
+            log(f' excluir_imagens - Falha catastrófica ao excluir imagem Central.\n Motivo: {exc}', 'error')
             return render_template("falha.html", dados=dados_dict)
     elif id == 'lg':
         try:
             retorno = excluir_logo()
             if retorno:
-                dados_dict = {'title': "Arquivos excluídos com sucesso!",
+                dados_dict = {'title': "Arquivo excluído com sucesso!",
                               'message': f'O arquivo da pasta Logo foi excluído com sucesso.',
                               'link': 'select_images'
                               }
-                og(' excluir_imagens - Imagem Logo excluída com sucesso.', 'info')
+                log(' excluir_imagens - Imagem Logo excluída com sucesso.', 'info')
                 return render_template("sucesso.html", dados=dados_dict)
             else:
-                dados_dict = {'title': "Falha ao excluir arquivos!",
+                dados_dict = {'title': "Falha ao excluir arquivo!",
                               'message': f"Falha ao excluir o dado da pasta Logo.",
                               'link': 'select_images',
                               'btn_text': 'Voltar'
@@ -675,7 +644,7 @@ def excluir_imagens(id):
                 log(' excluir_imagens - Falha ao excluir imagem Logo.', 'error')
                 return render_template("falha.html", dados=dados_dict)
         except Exception as exc:
-            dados_dict = {'title': "Falha ao excluir arquivos!",
+            dados_dict = {'title': "Falha ao excluir arquivo!",
                           'message': f"Falha ao excluir o dado da pasta Logo. <p> Motivo: {exc}",
                           'link': 'select_images',
                           'btn_text': 'Voltar'
@@ -684,67 +653,18 @@ def excluir_imagens(id):
             return render_template("falha.html", dados=dados_dict)
 
 
-@app.route("/gravar_scr", methods=["GET", "POST"])
-def gravar_scr():
-    # FullScreen
-    if request.method == "POST":
-        try:
-            file_scr = request.files.getlist("img-scr[]")
-            if file_scr[0].filename != '':
-                for i in file_scr:
-                    image = secure_filename(i.filename)
-                    i.save(os.path.join(app.config['UPLOAD_FOLDER'], 'fullscreen', image))
-
-                dados_dict = {'title': "Imagens salvas com sucesso!",
-                              'message': f"As imagens foram salvas com sucesso. <p> "
-                                         f"Clique em <b>Voltar</b> para adicionar mais imagens ou em "
-                                         f"<b>Enviar</b> para fazer o envio",
-                              'btn_voltar': 'Voltar',
-                              'link_voltar': 'select_images',
-                              'btn_env': 'Enviar Carga',
-                              'link_env': 'enviar_config'
-                              }
-                log(' gravar_scr - Imagens Central salvas com sucesso', 'info')
-                return render_template("gravar_scr.html", dados=dados_dict)
-            else:
-                dados_dict = {'title': "Falha ao salvar imagens",
-                              'message': f"Não foi enviada nenhuma imagem!",
-                              'link': 'select_images',
-                              'btn_text': 'Voltar'
-                              }
-                log(' gravar_scr - Nenhuma imagem foi enviada para FullScreen', 'error')
-                return render_template("falha.html", dados=dados_dict)
-        except TypeError as exc:
-            dados_dict = {'title': "Falha ao salvar imagens",
-                          'message': f"Não foi enviada nenhuma imagem!<p>Motivo:{exc}",
-                          'link': 'select_images',
-                          'btn_text': 'Voltar'
-                          }
-            log(f' gravar_scr - Falha catastrófica ao salvar imagens FullScreen.\n Motivo: {exc}', 'error')
-            return render_template("falha.html", dados=dados_dict)
-        except Exception as exc:
-            dados_dict = {'title': "Falha ao salvar imagens",
-                          'message': f"Falha ao salvar imagens. <p> Motivo: {exc}",
-                          'link': 'select_images',
-                          'btn_text': 'Voltar'
-                          }
-            log(f' gravar_scr - Falha catastrófica ao salvar imagens FullScreen.\n Motivo: {exc}', 'error')
-            return render_template("falha.html", dados=dados_dict)
-
-
 @app.route("/gravar_central", methods=["GET", "POST"])
 def gravar_central():
     # Central
     if request.method == "POST":
         try:
-            file_central = request.files.getlist("img-central[]")
-            if file_central[0].filename != '':
-                for i in file_central:
-                    image = secure_filename(i.filename)
-                    i.save(os.path.join(app.config['UPLOAD_FOLDER'], 'central', image))
+            file_central = request.files.get("img-central")
+            if file_central.filename != '':
+                image = secure_filename(file_central.filename)
+                file_central.save(os.path.join(app.config['UPLOAD_FOLDER'], 'central', image))
 
-                dados_dict = {'title': "Imagens salvas com sucesso!",
-                              'message': f"As imagens foram salvas com sucesso. <p> "
+                dados_dict = {'title': "Imagem salva com sucesso!",
+                              'message': f"A imagem enviada <b>{file_central.filename}</b> foi salva com sucesso. <p> "
                                          f"Clique em <b>Voltar</b> para adicionar mais imagens ou em "
                                          f"<b>Enviar</b> para fazer o envio",
                               'btn_voltar': 'Voltar',
@@ -752,10 +672,10 @@ def gravar_central():
                               'btn_env': 'Enviar Carga',
                               'link_env': 'enviar_config'
                               }
-                log(' gravar_central - Imagens Central salvas com sucesso', 'info')
+                log(' gravar_central - Imagem Central salva com sucesso', 'info')
                 return render_template("gravar_scr.html", dados=dados_dict)
             else:
-                dados_dict = {'title': "Falha ao salvar imagens",
+                dados_dict = {'title': "Falha ao salvar imagem",
                               'message': f"Não foi enviada nenhuma imagem!",
                               'link': 'select_images',
                               'btn_text': 'Voltar'
@@ -763,20 +683,20 @@ def gravar_central():
                 log(' gravar_central - Nenhuma imagem foi enviada para Central', 'error')
                 return render_template("falha.html", dados=dados_dict)
         except TypeError as exc:
-            dados_dict = {'title': "Falha ao salvar imagens",
+            dados_dict = {'title': "Falha ao salvar imagem",
                           'message': f"Não foi enviada nenhuma imagem!<p>Motivo:{exc}",
                           'link': 'select_images',
                           'btn_text': 'Voltar'
                           }
-            log(f' gravar_central - Falha catastrófica ao salvar imagens Central.\n Motivo: {exc}', 'error')
+            log(f' gravar_central - Falha catastrófica ao salvar imagem Central.\n Motivo: {exc}', 'error')
             return render_template("falha.html", dados=dados_dict)
         except Exception as exc:
-            dados_dict = {'title': "Falha ao salvar imagens",
-                          'message': f"Falha ao salvar imagens. <p> Motivo: {exc}",
+            dados_dict = {'title': "Falha ao salvar imagem",
+                          'message': f"Falha ao salvar imagem. <p> Motivo: {exc}",
                           'link': 'select_images',
                           'btn_text': 'Voltar'
                           }
-            log(f' gravar_central - Falha catastrófica ao salvar imagens Central.\n Motivo: {exc}', 'error')
+            log(f' gravar_central - Falha catastrófica ao salvar imagem Central.\n Motivo: {exc}', 'error')
             return render_template("falha.html", dados=dados_dict)
 
 
@@ -788,8 +708,8 @@ def gravar_logo():
             if file_lg.filename != '':
                 image = secure_filename(file_lg.filename)
                 file_lg.save(os.path.join(app.config['UPLOAD_FOLDER'], 'logo', image))
-                dados_dict = {'title': "Imagens salvas com sucesso!",
-                              'message': f"As imagens foram salvas com sucesso. <p> "
+                dados_dict = {'title': "Imagem salva com sucesso!",
+                              'message': f"A imagem enviada <b>{file_lg.filename}</b> foi salva com sucesso. <p> "
                                          f"Clique em <b>Voltar</b> para adicionar mais imagens ou em "
                                          f"<b>Enviar</b> para fazer o envio",
                               'btn_voltar': 'Voltar',

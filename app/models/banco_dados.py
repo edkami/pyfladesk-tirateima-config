@@ -11,9 +11,8 @@ class Temporizador(db.Model):
     pdt_ep = db.Column(db.Integer)
     pdt_uf = db.Column(db.Integer)
     pdt_df = db.Column(db.Integer)
-    scr_sav = db.Column(db.Integer)
 
-    def __init__(self, temp_nome, pdt_ne, pdt_falha, pdt_sp, pdt_ep, pdt_uf, pdt_df, scr_sav):
+    def __init__(self, temp_nome, pdt_ne, pdt_falha, pdt_sp, pdt_ep, pdt_uf, pdt_df):
         self.temp_nome = temp_nome
         self.pdt_ne = pdt_ne
         self.pdt_falha = pdt_falha
@@ -21,7 +20,6 @@ class Temporizador(db.Model):
         self.pdt_ep = pdt_ep
         self.pdt_uf = pdt_uf
         self.pdt_df = pdt_df
-        self.scr_sav = scr_sav
 
     def __repr__(self):
         return "<Temporizador %r>" % self.temp_nome
