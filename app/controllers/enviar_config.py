@@ -18,9 +18,8 @@ queue = Queue()
 finalizador_queue = object()
 
 # Caminho dos arquivos
-dir_ce = os.path.join('D:\\dev\\tira-teima-config\\app\\static\\client-img-folder\\', 'central')
-dir_fs = os.path.join('D:\\dev\\tira-teima-config\\app\\static\\client-img-folder\\', 'fullscreen')
-dir_lg = os.path.join('D:\\dev\\tira-teima-config\\app\\static\\client-img-folder\\', 'logo')
+dir_ce = os.path.join(os.getcwd(), 'app\\static\\client-img-folder\\', 'central')
+dir_lg = os.path.join(os.getcwd(), 'app\\static\\client-img-folder\\', 'logo')
 
 # Criação da conexão
 user = 'tirateima'
@@ -91,7 +90,7 @@ def config_temporizador(terminal):
         else:
             # conexão com banco de daados do terminal raspberry
             engine = create_engine(f"mariadb+mariadbconnector://{user}:{passwd}@{terminal.endereco_ip}/{bd}")
-            log(f' config_temporizador -Montando engine para terminal {terminal.equipamento} (Raspberry)', 'info')
+            log(f' config_temporizador - Montando engine para terminal {terminal.equipamento} (Raspberry)', 'info')
 
         meta = MetaData(engine)
         tb_temporizador = Table('temporizador', meta, autoload=True, autoload_with=engine)
@@ -109,7 +108,7 @@ def config_temporizador(terminal):
                                                     'pdt_ep': dados.pdt_ep,
                                                     'pdt_uf': dados.pdt_uf,
                                                     'pdt_df': dados.pdt_df,
-                                                    'scr_sav': dados.scr_sav})
+                                                    'scr_sav': None})
             conn.execute(stmt)
             log(f' config_temporizador - Inserido dados do Temporizador no banco de dados do '
                 f'Terminal {terminal.equipamento}.', 'info')
@@ -122,7 +121,7 @@ def config_temporizador(terminal):
                                                     'pdt_ep': dados.pdt_ep,
                                                     'pdt_uf': dados.pdt_uf,
                                                     'pdt_df': dados.pdt_df,
-                                                    'scr_sav': dados.scr_sav})
+                                                    'scr_sav': None})
             conn.execute(stmt)
             log(f' config_temporizador - Atualizado dados do Temporizador no banco de dados do '
                 f'Terminal {terminal.equipamento}.', 'info')
@@ -160,22 +159,22 @@ def envio_imagens_logo(terminal):
         destino = ntpath.join(r'\\', terminal.endereco_ip, 'Imagem_TiraTeima', 'logo')
         # Existe arquivos na pasta
         if len(os.listdir(destino)) > 0:
-            log(f' envio_imagens_logo - Existe dados anteriores na pasta Logo do Terminal {terminal.equipamento}', 'info')
+            log(f' envio_imagens_logo - Existe dados anterior na pasta Logo do Terminal {terminal.equipamento}', 'info')
             # Apagar arquivos existentes
             for i in os.listdir(destino):
                 os.remove(os.path.join(destino, i))
-                log(f' envio_imagens_logo - Removendo dados da pasta Logo do Terminal {terminal.equipamento}', 'info')
+                log(f' envio_imagens_logo - Removendo dado da pasta Logo do Terminal {terminal.equipamento}', 'info')
             # Enviar novos arquivos
             for i in os.listdir(dir_lg):
                 origem = os.path.join(dir_lg, i)
                 shutil.copy(origem, destino)
-                log(f' envio_imagens_logo - Enviando novos dados para pasta Logo do Terminal {terminal.equipamento}', 'info')
+                log(f' envio_imagens_logo - Enviando novo dado para pasta Logo do Terminal {terminal.equipamento}', 'info')
         else:
             # Enviar novos arquivos
             for i in os.listdir(dir_lg):
                 origem = os.path.join(dir_lg, i)
                 shutil.copy(origem, destino)
-                log(f' envio_imagens_logo - Enviando novos dados para pasta Logo do Terminal {terminal.equipamento}', 'info')
+                log(f' envio_imagens_logo - Enviando novo dado para pasta Logo do Terminal {terminal.equipamento}', 'info')
     except Exception:
         log(f' envio_imagens_logo - Falha catastrófica na durante a execução dos processos de manipulação '
             f'do diretório Logo do Terminal {terminal.equipamento}. \n Motivo:  ', 'exc')
@@ -191,55 +190,25 @@ def envio_imagens_central(terminal):
         destino = ntpath.join(r'\\', terminal.endereco_ip, 'Imagem_TiraTeima', 'propaganda')
         # Existe arquivos na pasta
         if len(os.listdir(destino)) > 0:
-            log(f' envio_imagens_central - Existe dados anteriores na pasta Central do Terminal {terminal.equipamento}', 'info')
+            log(f' envio_imagens_central - Existe dado anterior na pasta Central do Terminal {terminal.equipamento}', 'info')
             # Apagar arquivos existentes
             for i in os.listdir(destino):
                 os.remove(os.path.join(destino, i))
-                log(f' envio_imagens_central - Removendo dados da pasta Central do Terminal {terminal.equipamento}', 'info')
+                log(f' envio_imagens_central - Removendo dado da pasta Central do Terminal {terminal.equipamento}', 'info')
             # Enviar novos arquivos
             for i in os.listdir(dir_ce):
                 origem = os.path.join(dir_ce, i)
                 shutil.copy(origem, destino)
-                log(f' envio_imagens_central - Enviando novos dados para pasta Central do Terminal {terminal.equipamento}', 'info')
+                log(f' envio_imagens_central - Enviando novo dado para pasta Central do Terminal {terminal.equipamento}', 'info')
         else:
             # Enviar novos arquivos
             for i in os.listdir(dir_ce):
                 origem = os.path.join(dir_ce, i)
                 shutil.copy(origem, destino)
-                log(f' envio_imagens_central - Enviando novos dados para pasta Central do Terminal {terminal.equipamento}', 'info')
+                log(f' envio_imagens_central - Enviando novo dado para pasta Central do Terminal {terminal.equipamento}', 'info')
     except Exception:
         log(f' envio_imagens_central - Falha catastrófica na durante a execução dos processos de manipulação '
             f'do diretório Central do Terminal {terminal.equipamento}. \n Motivo:  ', 'exc')
-
-
-def envio_imagens_desktop(terminal):
-    """
-    Função irá enviar os arquivos da pasta app/static/client-img-folder/fullscreen para a pasta do terminal
-    :param terminal: objeto equipamento
-    :return:
-    """
-    destino = ntpath.join(r'\\', terminal.endereco_ip, 'Imagem_TiraTeima', 'desktop')
-    try:
-        # Existe arquivos na pasta
-        if len(os.listdir(destino)) > 0:
-            log(f' envio_imagens_desktop - Existe dados anteriores na pasta Desktop do Terminal {terminal.equipamento}', 'info')
-            # Apagar arquivos existentes
-            for i in os.listdir(destino):
-                os.remove(os.path.join(destino, i))
-                log(f' envio_imagens_desktop - Removendo dados da pasta Desktop do Terminal {terminal.equipamento}', 'info')
-            # Enviar novos arquivos
-            for i in os.listdir(dir_fs):
-                origem = os.path.join(dir_fs, i)
-                shutil.copy(origem, destino)
-                log(f' envio_imagens_desktop - Enviando novos dados para pasta Desktop do Terminal {terminal.equipamento}', 'info')
-        else:
-            for i in os.listdir(dir_fs):
-                origem = os.path.join(dir_fs, i)
-                shutil.copy(origem, destino)
-                log(f' envio_imagens_desktop - Enviando dados para pasta Desktop do Terminal {terminal.equipamento}', 'info')
-    except Exception:
-        log(f' envio_imagens_desktop - Falha catastrófica na durante a execução dos processos de manipulação '
-            f'do diretório Desktop do Terminal {terminal.equipamento}. \n Motivo:  ', 'exc')
 
 
 def transacao_arquivos(i, queue):
@@ -270,7 +239,6 @@ def transacao_arquivos(i, queue):
                     permissao_imagens(item.endereco_ip,  item.equipamento, 'ubuntu')
                 envio_imagens_logo(item)
                 envio_imagens_central(item)
-                envio_imagens_desktop(item)
                 config_servidor(item)
                 config_temporizador(item)
                 if item.tipo_equipamento == 1:
