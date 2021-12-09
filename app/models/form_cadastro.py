@@ -12,7 +12,6 @@ class FormTemporizador(FlaskForm):
     pdt_ep = IntegerField('em_promo', validators=[DataRequired()])
     pdt_uf = IntegerField('uma_faixa', validators=[DataRequired()])
     pdt_df = IntegerField('duas_faixa', validators=[DataRequired()])
-    scr_sav = IntegerField('screen_saver', validators=[DataRequired()])
     submit = SubmitField("Cadastrar")
 
 
@@ -21,8 +20,8 @@ class FormEquipamento(FlaskForm):
     end_ip = StringField("end_ip", validators=[IPAddress(message="Endereço IP inválido"), DataRequired()])
     servidor = SelectField('servidor')
     temporizador = SelectField('temporizador')
-    campos = [(1, "Busca-Preço"), (2, "Propaganda"), (3, "Ambos")]
-    modo = RadioField('modo_operacao', choices=campos, validators=[DataRequired()])
+    campos = [(1, "Busca-Preço")]
+    modo = RadioField('modo_operacao', choices=campos, default=1, validators=[DataRequired()])
     equip_mode = [(1, "Computador"), (2, "Raspberry")]
     tipo_equipamento = RadioField('tipo_equipamento', choices=equip_mode, validators=[DataRequired()])
     submit = SubmitField("Cadastrar")
@@ -33,8 +32,8 @@ class FormEquipamentoBusca(FlaskForm):
     end_ip = StringField("end_ip", validators=[IPAddress(message="Endereço IP inválido"), DataRequired()])
     servidor = SelectField('servidor')
     temporizador = SelectField('temporizador')
-    campos = [(1, "Busca-Preço"), (2, "Propaganda"), (3, "Ambos")]
-    modo = RadioField('modo_operacao', choices=campos, validators=[DataRequired()])
+    campos = [(1, "Busca-Preço")]
+    modo = RadioField('modo_operacao', choices=campos, default=1, validators=[DataRequired()])
     submit = SubmitField("Cadastrar")
 
 
