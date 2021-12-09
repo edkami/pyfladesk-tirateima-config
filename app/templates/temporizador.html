@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+
+{% block content%}
+
+	<div class="main-container">
+		<div class="pd-ltr-20 xs-pd-20-10">
+			<div class="min-height-200px">
+			<!-- Cabeçalho -->
+				<div class="page-header">
+					<div class="row">
+						<div class="col-md-6 col-sm-12">
+							<div class="title">
+								<h4>Temporizador</h4>
+							</div>
+							<nav aria-label="breadcrumb" role="navigation">
+								<ol class="breadcrumb">
+									<li class="breadcrumb-item"><a href="index">Cadastro</a></li>
+									<li class="breadcrumb-item active" aria-current="page">Temporizador</li>
+								</ol>
+							</nav>
+						</div>
+					</div>
+				</div>
+				<!-- Cabeçalho Cadastro -->
+				<div class="pd-20 card-box mb-30">
+					<div class="clearfix">
+						<div class="pull-left">
+							<h4 class="text-blue h4">Cadastro do Temporizador</h4>
+							<p class="mb-30">O temporizador irá controlar o tempo em que cada operação permanecerá visivel.
+								<br>Todos os campos terão a unidade <b>segundos</b>.
+							</p>
+						</div>
+					</div>
+					<!-- Formulario -->
+					<form action='' method="POST">
+						{{ form.csrf_token }}
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Nome para Exibição</label>
+							<div class="col-sm-12 col-md-10">
+								{{ form.temp_nome(class="form-control", placeholder="Temporizador 1") }}
+								{% if form.errors.temp_nome %}
+									<div class="alert alert-danger" role="alert">
+										<ul>
+											{% for e in form.errors.temp_nome %}
+												<li>
+													{{ e }}
+												</li>
+											{% endfor %}
+										</ul>
+									</div>
+								{% endif %}
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Produto Não Encontrado</label>
+							<div class="col-sm-12 col-md-10">
+								{{ form.pdt_ne(class="form-control", placeholder="4") }}
+								{% if form.errors.pdt_ne %}
+									<div class="alert alert-danger" role="alert">
+										<ul>
+											{% for e in form.errors.pdt_ne %}
+												<li>
+													{{ e }}
+												</li>
+											{% endfor %}
+										</ul>
+									</div>
+								{% endif %}
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Falha ao pesquisar Produto</label>
+							<div class="col-sm-12 col-md-10">
+								{{ form.pdt_falha(class="form-control", placeholder="4") }}
+								{% if form.errors.pdt_falha %}
+									<div class="alert alert-danger" role="alert">
+										<ul>
+											{% for e in form.errors.pdt_falha %}
+												<li>
+													{{ e }}
+												</li>
+											{% endfor %}
+										</ul>
+									</div>
+								{% endif %}
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Produto Sem Promoção</label>
+							<div class="col-sm-12 col-md-10">
+								{{ form.pdt_sp(class="form-control", placeholder="4") }}
+								{% if form.errors.pdt_sp %}
+									<div class="alert alert-danger" role="alert">
+										<ul>
+											{% for e in form.errors.pdt_sp %}
+												<li>
+													{{ e }}
+												</li>
+											{% endfor %}
+										</ul>
+									</div>
+								{% endif %}
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Produto Em Promoção</label>
+							<div class="col-sm-12 col-md-10">
+								{{ form.pdt_ep(class="form-control", placeholder="4") }}
+								{% if form.errors.pdt_ep %}
+									<div class="alert alert-danger" role="alert">
+										<ul>
+											{% for e in form.errors.pdt_ep %}
+												<li>
+													{{ e }}
+												</li>
+											{% endfor %}
+										</ul>
+									</div>
+								{% endif %}
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Produto 1 Faixa de Preço</label>
+							<div class="col-sm-12 col-md-10">
+								{{ form.pdt_uf(class="form-control", placeholder="4") }}
+								{% if form.errors.pdt_uf %}
+									<div class="alert alert-danger" role="alert">
+										<ul>
+											{% for e in form.errors.pdt_uf %}
+												<li>
+													{{ e }}
+												</li>
+											{% endfor %}
+										</ul>
+									</div>
+								{% endif %}
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Produto 2 Faixas de Preço</label>
+							<div class="col-sm-12 col-md-10">
+								{{ form.pdt_df(class="form-control", placeholder="6") }}
+								{% if form.errors.pdt_df %}
+									<div class="alert alert-danger" role="alert">
+										<ul>
+											{% for e in form.errors.pdt_df %}
+												<li>
+													{{ e }}
+												</li>
+											{% endfor %}
+										</ul>
+									</div>
+								{% endif %}
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Propaganda</label>
+							<div class="col-sm-12 col-md-10">
+								{{ form.scr_sav(class="form-control", placeholder="60") }}
+								{% if form.errors.scr_sav %}
+									<div class="alert alert-danger" role="alert">
+										<ul>
+											{% for e in form.errors.scr_sav %}
+												<li>
+													{{ e }}
+												</li>
+											{% endfor %}
+										</ul>
+									</div>
+								{% endif %}
+							</div>
+						</div>
+						<div>
+							{{ form.submit(class="btn btn-primary btn-lg btn-block") }}
+						</div>
+					</form>
+				</div>
+				<div class="footer-wrap pd-20 mb-20 card-box">
+				<div>
+					Mercadologic Tira-Teima mantido por
+				</div>
+				<div>
+					<a href="https://www.processasistemas.com.br" target="_blank">
+						<img src="{{ url_for('static', filename= 'images/logo_processa.png')}}" alt="Processa Sistemas" class="dark-logo">
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

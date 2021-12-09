@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block content%}
+
+<div class="main-container">
+	<div class="pd-ltr-20 xs-pd-20-10">
+		<div class="min-height-200px">
+		<!-- Cabeçalho -->
+			<div class="page-header">
+				<div class="row">
+					<div class="col-md-6 col-sm-12">
+						<div class="title">
+							<h4>Servidor</h4>
+						</div>
+						<nav aria-label="breadcrumb" role="navigation">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="index">Cadastro</a></li>
+								<li class="breadcrumb-item active" aria-current="page">Servidor</li>
+							</ol>
+						</nav>
+					</div>
+				</div>
+			</div>
+			<!-- Cabeçalho Cadastro -->
+			<div class="pd-20 card-box mb-30">
+				<div class="clearfix">
+					<div class="pull-left">
+						<h4 class="text-blue h4">Editar Cadastro do Servidor</h4>
+						<p class="mb-30">Editar um cadastro já existente.</p>
+					</div>
+				</div>
+				<!-- Formulario -->
+				<form action=" {{ url_for('editar_servidor') }}" method="POST">
+					{{ form.csrf_token }}
+					<div class="form-group row">
+						<label class="col-sm-12 col-md-2 col-form-label">Tipo de Conexão</label>
+						<div class="col-sm-12 col-md-10">
+							{{ form.tipo(class="form-control", value=dados.tipo, readonly="readonly") }}
+							{% if form.errors.tipo %}
+								<div class="alert alert-danger" role="alert">
+									<ul>
+										{% for e in form.errors.descricao %}
+											<li>
+												{{ e }}
+											</li>
+										{% endfor %}
+									</ul>
+								</div>
+							{% endif %}
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-12 col-md-2 col-form-label">Descrição do Servidor</label>
+						<div class="col-sm-12 col-md-10">
+							{{ form.descricao(class="form-control", value=dados.descricao, readonly="readonly") }}
+							{% if form.errors.descricao %}
+								<div class="alert alert-danger" role="alert">
+									<ul>
+										{% for e in form.errors.descricao %}
+											<li>
+												{{ e }}
+											</li>
+										{% endfor %}
+									</ul>
+								</div>
+							{% endif %}
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-12 col-md-2 col-form-label">Endereço IP</label>
+						<div class="col-sm-12 col-md-10">
+							{{ form.end_ip(class="form-control", value=dados.endereco_ip) }}
+							{% if form.errors.end_ip %}
+								<div class="alert alert-danger" role="alert">
+									<ul>
+										{% for e in form.errors.end_ip %}
+											<li>
+												{{ e }}
+											</li>
+										{% endfor %}
+									</ul>
+								</div>
+							{% endif %}
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-12 col-md-2 col-form-label">Senha de Conexão</label>
+						<div class="col-sm-12 col-md-10">
+							<div class="dropdown">
+								{{ form.passwd(class="form-control", readonly="readonly", placeholder="Senha já inserida") }}
+							</div>
+						</div>
+					</div>
+					<div>
+						{{ form.submit(class="btn btn-primary btn-lg btn-block") }}
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="footer-wrap pd-20 mb-20 card-box">
+				<div>
+					Mercadologic Tira-Teima mantido por
+				</div>
+				<div>
+					<a href="https://www.processasistemas.com.br" target="_blank">
+						<img src="{{ url_for('static', filename= 'images/logo_processa.png')}}" alt="Processa Sistemas" class="dark-logo">
+					</a>
+				</div>
+			</div>
+	</div>
+</div>
+{% endblock %}

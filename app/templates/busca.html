@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="main-container">
+		<div class="pd-ltr-20 xs-pd-20-10">
+			<div class="min-height-200px">
+			<!-- Cabeçalho -->
+				<div class="page-header">
+					<div class="row">
+						<div class="col-md-6 col-sm-12">
+							<div class="title">
+								<h4>Edição de Equipamento Cadastrado</h4>
+							</div>
+							<nav aria-label="breadcrumb" role="navigation">
+								<ol class="breadcrumb">
+									<li class="breadcrumb-item"><a href="index">Cadastro</a></li>
+									<li class="breadcrumb-item active" aria-current="page">Equipamento</li>
+								</ol>
+							</nav>
+						</div>
+					</div>
+				</div>
+				<!-- Cabeçalho Cadastro -->
+				<div class="pd-20 card-box mb-30">
+					<div class="clearfix">
+						<div class="pull-left">
+							<h4 class="text-blue h4">Edição do Cadastro de Equipamento</h4>
+							<p class="mb-30">Edição do cadastro de equipamentos</p>
+						</div>
+					</div>
+					<!-- Formulario -->
+					<form action="{{ url_for('editar_cadastro') }}" method="POST">
+						{{ form2.csrf_token }}
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Nome para Exibição</label>
+							<div class="col-sm-12 col-md-10">
+								{{ form2.descricao(class="form-control", value=dados.equipamento, readonly="readonly") }}
+								{% if form2.errors.descricao %}
+									<div class="alert alert-danger" role="alert">
+										<ul>
+											{% for e in form2.errors.descricao %}
+												<li>
+													{{ e }}
+												</li>
+											{% endfor %}
+										</ul>
+									</div>
+								{% endif %}
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Endereço IP</label>
+							<div class="col-sm-12 col-md-10">
+								{{ form2.end_ip(class="form-control", value=dados.endereco_ip) }}
+								{% if form2.errors.end_ip %}
+									<div class="alert alert-danger" role="alert">
+										<ul>
+											{% for e in form2.errors.end_ip %}
+												<li>
+													{{ e }}
+												</li>
+											{% endfor %}
+										</ul>
+									</div>
+								{% endif %}
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Servidor</label>
+							<div class="col-sm-12 col-md-10">
+								<div class="dropdown">
+										{{ form2.servidor(class="selectpicker") }}
+								</div>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Temporizador</label>
+							<div class="col-sm-12 col-md-10">
+								<div class="dropdown">
+										{{ form2.temporizador(class="selectpicker") }}
+								</div>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Modo de Operação</label>
+							<div class="col-sm-12 col-md-10">
+								{% for sub in form2.modo %}
+									<div class="custom-control custom-radio mb-5">
+                                        {% if dados.modo_operacao == sub.data %}
+                                            <input checked class="custom-control-input" type="radio" id="{{ sub.id }}"
+                                                   name="modo" value="{{ sub.data }}">
+										    {{ sub.label(class="custom-control-label") }}
+                                        {% else %}
+                                            {{ sub(class="custom-control-input") }}
+										    {{ sub.label(class="custom-control-label") }}
+                                        {% endif %}
+									</div>
+								{% endfor %}
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Tipo de Terminal</label>
+							<div class="col-sm-12 col-md-10">
+								{% for sub in form2.tipo_equipamento %}
+									<div class="custom-control custom-radio mb-5">
+                                        {% if dados.tipo_equipamento == sub.data %}
+                                            <input checked class="custom-control-input" type="radio" id="{{ sub.id }}"
+                                                   name="tipo_equipamento" value="{{ sub.data }}">
+										    {{ sub.label(class="custom-control-label") }}
+                                        {% else %}
+                                            {{ sub(class="custom-control-input") }}
+										    {{ sub.label(class="custom-control-label") }}
+                                        {% endif %}
+									</div>
+								{% endfor %}
+							</div>
+						</div>
+						<div>
+							<!--{{ form.submit(class="btn btn-primary btn-lg btn-block") }}-->
+							<input class="btn btn-primary btn-lg btn-block" id="submit"
+								   name="submit" type="submit" value="Salvar Alteração">
+						</div>
+					</form>
+				</div>
+				<div class="footer-wrap pd-20 mb-20 card-box">
+				<div>
+					Mercadologic Tira-Teima mantido por
+				</div>
+				<div>
+					<a href="https://www.processasistemas.com.br" target="_blank">
+						<img src="{{ url_for('static', filename= 'images/logo_processa.png')}}" alt="Processa Sistemas" class="dark-logo">
+					</a>
+				</div>
+			</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

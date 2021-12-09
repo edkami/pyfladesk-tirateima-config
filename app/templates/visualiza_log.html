@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content%}
+    <div class="main-container">
+        <div class="pd-ltr-20 xs-pd-20-10">
+            <div class="min-height-200px">
+            <!-- Cabeçalho -->
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            <div class="title">
+                                <h4>Visualizar Log</h4>
+                            </div>
+                            <nav aria-label="breadcrumb" role="navigation">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="index">Principal</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Visualizar Log</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <!-- Cabeçalho Cadastro -->
+                <div class="pd-20 card-box mb-30">
+                    <div class="clearfix">
+                        <div class="pull-left">
+                            <h4 class="text-blue h4">Visualizar Log</h4>
+                            <p class="mb-30">Exibe o log do terminal selecionado.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <br>
+                        <h3>Terminal: {{ terminal }}</h3>
+                        <br>
+                        {% for linha in texto%}
+                            <p>{{ linha }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="footer-wrap pd-20 mb-20 card-box">
+				<div>
+					Mercadologic Tira-Teima mantido por
+				</div>
+				<div>
+					<a href="https://www.processasistemas.com.br" target="_blank">
+						<img src="{{ url_for('static', filename= 'images/logo_processa.png')}}" alt="Processa Sistemas" class="dark-logo">
+					</a>
+				</div>
+			</div>
+        </div>
+    </div>
+
+{% endblock %}

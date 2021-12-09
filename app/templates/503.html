@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Basic Page Info -->
+	<meta charset="utf-8">
+	<title>Mercadologic Tira-Teima</title>
+
+	<!-- Site favicon -->
+	<link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename= 'images/images/apple-touch-icon.png')}}">
+	<link rel="icon" type="image/png" href="{{ url_for('static', filename= 'images/favicon.ico')}}">
+
+
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- Google Font -->
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename= 'css/core.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename= 'css/icon-font.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename= 'plugins/css/dataTables.bootstrap4.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename= 'plugins/css/responsive.bootstrap4.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename= 'css/style.css')}}">
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-119386393-1');
+	</script>
+</head>
+<body>
+	<div class="error-page d-flex align-items-center flex-wrap justify-content-center pd-20">
+		<div class="pd-10">
+			<div class="error-page-wrap text-center">
+				<div>
+					<img class="img-responsive w-100" src="{{ url_for('static', filename= 'images/503_animation.gif')}}" alt="Card image cap">
+				</div>
+				<h3>Erro: 503 Servidor inacessível</h3>
+				<p>Desculpe, iremos redirecionar para o início.
+			</div>
+		</div>
+	</div>
+	<!-- js -->
+	<script src="{{ url_for('static', filename= 'js/core.js')}}"></script>
+	<script src="{{ url_for('static', filename= 'js/script.min.js')}}"></script>
+	<script src="{{ url_for('static', filename= 'js/process.js')}}"></script>
+	<script src="{{ url_for('static', filename= 'js/layout-settings.js')}}"></script>
+	<script src="{{ url_for('static', filename= 'plugins/apexcharts/apexcharts.min.js')}}"></script>
+	<script src="{{ url_for('static', filename= 'plugins/js/jquery.dataTables.min.js')}}"></script>
+	<script src="{{ url_for('static', filename= 'plugins/js/dataTables.bootstrap4.min.js')}}"></script>
+	<script src="{{ url_for('static', filename= 'plugins/js/dataTables.responsive.min.js')}}"></script>
+	<script src="{{ url_for('static', filename= 'plugins/js/responsive.bootstrap4.min.js')}}"></script>
+	<script src="{{ url_for('static', filename= 'js/dashboard.js')}}"></script>
+</body>
+</html>

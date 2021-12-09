@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<!-- Inicio do box de texto -->
+<div class="main-container">
+    <div class="pd-ltr-20 xs-pd-20-10">
+        <div class="min-height-200px">
+        <!-- Cabeçalho -->
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="title">
+                            <h4>Configuração</h4>
+                        </div>
+						<nav aria-label="breadcrumb" role="navigation">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index">Configuração</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Enviar</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!-- Cabeçalho Cadastro -->
+            <div class="pd-20 card-box mb-30">
+                <div class="clearfix">
+                    <div class="pull-left">
+                        <h4 class="text-blue h4">Envio de Configuração</h4>
+                        <p class="mb-30">Envia configuração para os equipamentos selecionados </p>
+                    </div>
+                </div>
+                <form action="" method="POST">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th colspan="2"><input type="checkbox" onClick="toggle(this)"/> Marcar/Desmarcar Todos</th>
+                            </tr>
+                            <tr>
+                                <th scope="col"> Enviar</th>
+                                <th scope="col">Equipamento</th>
+                                <th scope="col">Endereço IP</th>
+                                <th scope="col">Ultimo Envio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in equipamento %}
+                                <tr>
+                                    <th>
+                                        <input type="checkbox" name="enviacheck" value="{{ item[0] }}">
+                                    </th>
+                                    <td>{{ item[1] }}</td>
+                                    <td>{{ item[2] }}</td>
+                                    <td>{{ item[3] }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <input class="btn btn-primary btn-lg btn-block" type="submit" value="Enviar Configuração" >
+                </form>
+			</div>
+			<div class="footer-wrap pd-20 mb-20 card-box">
+				<div>
+					Mercadologic Tira-Teima mantido por
+				</div>
+				<div>
+					<a href="https://www.processasistemas.com.br" target="_blank">
+						<img src="{{ url_for('static', filename= 'images/logo_processa.png')}}" alt="Processa Sistemas" class="dark-logo">
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script language="JavaScript">
+    function toggle(source) {
+      checkboxes = document.getElementsByName('enviacheck');
+      for(var i=0, n=checkboxes.length;i<n;i++) {
+        checkboxes[i].checked = source.checked;
+      }
+    }
+</script>
+<script>
+    $('.file-upload').file_upload();
+</script>
+{% endblock %}

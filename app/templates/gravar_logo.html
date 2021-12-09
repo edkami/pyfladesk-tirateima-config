@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Inicio do box de texto -->
+	<div class="main-container">
+        <div class="pd-ltr-20 xs-pd-20-10">
+            <div class="min-height-200px">
+                <div class="card-box pd-20 height-100-p mb-30">
+                    <div class="container-fluid p-0">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <img class="img-responsive w-100" src="{{ url_for('static', filename= 'images/sucesso.png')}}" alt="Card image cap">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <h1 class="font-20 weight-500 mb-10 text-capitalize text-center">
+                            <br>
+                            {{ dados.title }}
+                        </h1>
+                    </div>
+                    <div class="col-md-12 text-center">
+                            {{ dados.message| safe }}
+                    </div>
+                    <br>
+                    <br>
+                    <div class="col-md-12 text-center">
+                        <a class="btn btn-success btn-lg mr-5" role="button" href="{{ url_for(dados.link_voltar) }}">{{ dados.btn_voltar }}</a>
+                        <a class="btn btn-success btn-lg" role="button" href="{{ url_for(dados.link_env) }}">{{ dados.btn_env }}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-wrap pd-20 mb-20 card-box">
+				<div>
+					Mercadologic Tira-Teima mantido por
+				</div>
+				<div>
+					<a href="https://www.processasistemas.com.br" target="_blank">
+						<img src="{{ url_for('static', filename= 'images/logo_processa.png')}}" alt="Processa Sistemas" class="dark-logo">
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <!-- <script src="{{ url_for('static', filename='/js/redirect_page.js') }}"></script> -->
+{% endblock %}

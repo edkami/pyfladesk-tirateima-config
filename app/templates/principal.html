@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<!-- Inicio do box de texto -->
+	<div class="main-container">
+		<div class="pd-ltr-20">
+			<div class="card-box pd-20 height-100-p mb-30">
+				<div class="row align-items-center">
+					<div class="col-md-4">
+						<img src="{{ url_for('static', filename= 'images/banner-img.png')}}" alt="">
+					</div>
+					<div class="col-md-8">
+						<h4 class="font-20 weight-500 mb-10 text-capitalize">
+							<div class="weight-600 font-30 text-blue">Bem-Vindo!</div>
+						</h4>
+						<p class="font-18 max-width-600">Acompanhe o funcionamento dos seus equipamentos.
+							<br>Para mais operações execute a opção 'Detalhes'</p>
+					</div>
+				</div>
+			</div>
+			<div class="card-box mb-30">
+				<h2 class="h4 pd-20">Equipamentos</h2>
+				<div class="table-responsive">
+					<table class="table nowrap">
+						<thead>
+							<tr>
+								<th class="table-plus datatable-nosort">Modo de Operação</th>
+								<th>Nome</th>
+								<th> Endereço IP</th>
+								<th> Ativo </th>
+								<th class="datatable-nosort">Detalhes</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for bp in bd %}
+							<tr>
+								<td class="table-plus">
+									{% if bp.modo_operacao == 1 %}
+										<img src="{{ url_for('static', filename= 'images/busca_preco.png')}}"
+											 width="70" height="70" alt="">
+									{% elif bp.modo_operacao == 2 %}
+										<img src="{{ url_for('static', filename= 'images/propaganda.png')}}"
+											 width="70" height="70" alt="">
+									{% elif bp.modo_operacao == 3 %}
+										<img src="{{ url_for('static', filename= 'images/ambos.png')}}"
+											 width="70" height="70" alt="">
+									{% endif %}
+								</td>
+								<td>
+									<h5 class="font-16">{{ bp.equipamento }}</h5>
+								</td>
+								<td>{{ bp.endereco_ip }}</td>
+								<td>
+									{% if bp.atividade == 1 %}
+										Ativo
+									{% else %}
+										Inativo
+									{% endif %}
+								</td>
+								<td>
+									<div class="dropdown">
+										<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#"
+										   role="button" data-toggle="dropdown">
+											<i class="dw dw-more"></i>
+										</a>
+										<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+											<a class="dropdown-item" href="{{ url_for('view_log', end_ip=bp.endereco_ip, terminal=bp.equipamento) }}"><i class="dw dw-edit1"></i> Visualizar Log </a>
+											<a class="dropdown-item" href="{{ url_for('busca_edit', edit=bp.equipamento) }}"><i class="dw dw-edit2"></i> Editar registro </a>
+											<a class="dropdown-item" href="{{ url_for('deletar_equipamento', edit=bp.equipamento) }}"><i class="dw dw-delete-3"></i> Excluir registro</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!-- Div dos dados de Servidores -->
+			<div class="card-box mb-30">
+				<h2 class="h4 pd-20">Servidores</h2>
+				<table class="table nowrap">
+					<thead>
+						<tr>
+							<th class="table-plus datatable-nosort">Serviço</th>
+							<th>Descrição</th>
+							<th>Endereço IP</th>
+							<th class="datatable-nosort">Detalhes</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for bsi in bs %}
+							<tr>
+								<td class="table-plus">
+									<img src="{{ url_for('static', filename= 'images/pgsql.png')}}"
+										 width="70" height="70" alt="">
+									<h5 class="font-16">{{ bsi.tipo }}</h5>
+								</td>
+								<td>
+									<h5 class="font-16">{{ bsi.descricao }}</h5>
+								</td>
+								<td>
+									<h5 class="font-16">{{ bsi.endereco_ip }}</h5>
+								</td>
+								<td>
+									<div class="dropdown">
+										<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
+										   href="#" role="button" data-toggle="dropdown">
+											<i class="dw dw-more"></i>
+										</a>
+										<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+											<a class="dropdown-item" href="{{url_for('busca_servidor', edit=bsi.descricao)}}"><i class="dw dw-edit2"></i> Editar registro </a>
+											<a class="dropdown-item" href="{{ url_for('deletar_servidor', edit=bsi.descricao) }}"><i class="dw dw-delete-3"></i> Excluir registro</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			<div class="card-box mb-30">
+				<h2 class="h4 pd-20">Temporizadores</h2>
+				<table class="table nowrap">
+					<thead>
+						<tr>
+							<th class="table-plus datatable-nosort">Modo de Operação</th>
+							<th>Nome</th>
+							<th class="datatable-nosort">Detalhes</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for bti in bt %}
+							<tr>
+								<td class="table-plus">
+									<img src="{{ url_for('static', filename= 'images/temporizador.png')}}"
+										 width="70" height="70" alt="">
+								</td>
+								<td>
+									<h5 class="font-16">{{ bti.temp_nome }}</h5>
+								<td>
+									<div class="dropdown">
+										<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
+										   href="#" role="button" data-toggle="dropdown">
+											<i class="dw dw-more"></i>
+										</a>
+										<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+											<a class="dropdown-item" href="{{url_for('busca_temporizador', edit=bti.temp_nome)}}"><i class="dw dw-edit2"></i> Editar registro </a>
+											<a class="dropdown-item" href="{{url_for('deletar_temporizador', edit=bti.temp_nome)}}"><i class="dw dw-delete-3"></i> Excluir registro</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+                        {% endfor %}
+					</tbody>
+				</table>
+			</div>
+			<div class="footer-wrap pd-20 mb-20 card-box">
+				<div>
+					Mercadologic Tira-Teima mantido por
+				</div>
+				<div>
+					<a href="https://www.processasistemas.com.br" target="_blank">
+						<img src="{{ url_for('static', filename= 'images/logo_processa.png')}}" alt="Processa Sistemas" class="dark-logo">
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

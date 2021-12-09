@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content%}
+
+    <div class="main-container">
+		<div class="pd-ltr-20 xs-pd-20-10">
+			<div class="min-height-200px">
+				<div class="page-header">
+					<div class="row">
+						<div class="col-md-6 col-sm-12">
+							<div class="title">
+								<h4>Dados Dos Terminais</h4>
+							</div>
+							<nav aria-label="breadcrumb" role="navigation">
+								<ol class="breadcrumb">
+									<li class="breadcrumb-item"><a href="index.html">Captura de Dados</a></li>
+									<li class="breadcrumb-item active" aria-current="page">Dados Dos Terminais</li>
+								</ol>
+							</nav>
+						</div>
+					</div>
+				</div>
+				<!-- Simple Datatable start -->
+				{% for term in ord_retorno %}
+					<div class="card-box mb-30">
+						<div class="pd-20">
+							<h4 class="text-blue h4">Terminal: {{ term }}</h4>
+						</div>
+						<div class="pb-20">
+							<table class="table nowrap">
+								<thead>
+									<tr>
+										<th class="table-plus datatable-nosort">EAN</th>
+										<th>Data/Hora</th>
+									</tr>
+								</thead>
+								{% for dado in retorno[term] %}
+									<tbody>
+										<tr>
+											<td class="table-plus">{{ dado[1] }}</td>
+											<td>{{ dado[2] }}</td>
+										</tr>
+									</tbody>
+								{% endfor %}
+							</table>
+						</div>
+					</div>
+				{% endfor %}
+            </div>
+			<div class="footer-wrap pd-20 mb-20 card-box">
+				<div>
+					Mercadologic Tira-Teima mantido por
+				</div>
+				<div>
+					<a href="https://www.processasistemas.com.br" target="_blank">
+						<img src="{{ url_for('static', filename= 'images/logo_processa.png')}}" alt="Processa Sistemas" class="dark-logo">
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

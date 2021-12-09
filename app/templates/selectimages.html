@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<!-- Inicio do box de texto -->
+<div class="main-container">
+    <div class="pd-ltr-20 xs-pd-20-10">
+        <div class="min-height-200px">			<!-- Cabeçalho -->
+        <!-- Cabeçalho -->
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="title">
+                            <h4>Configuração</h4>
+                        </div>
+						<nav aria-label="breadcrumb" role="navigation">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index">Configuração</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Selecionar Imagens</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!-- Cabeçalho Fullscreen -->
+            <div>
+                <div class="pd-20 card-box mb-30">
+                    <div class="clearfix">
+                        <div class="pull-left">
+                            <h4 class="text-blue h4">Propaganda FullScreen</h4>
+                            <p class="mb-30">Imagens que ocuparão toda a Tela.</p>
+                        </div>
+                    </div>
+                    <form action=" {{url_for('gravar_scr')}} " method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <div class="col-sm-9">
+                                <div> <h5> Imagens anteriores</h5></div>
+                                <div class="dropdown">
+                                    <button type="button" id="dropdownfs" class="btn btn-primary btn-lg dropdown-toggle"
+                                            data-bs-toggle="dropdown"  aria-expanded="false">
+                                        {% if lfs|length > 0 %}
+                                            Imagens contidas
+                                            <span class="badge bg-primary rounded-pill">{{ lfs|length }}</span>
+                                        {% else %}
+                                            Não existe nenhuma imagem
+                                        {% endif %}
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownfs">
+                                        {% if lfs|length > 0 %}
+                                            {% for image in lfs %}
+                                                <li><a class="dropdown-item disabled" href="#">{{ image }}</a></li>
+                                            {% endfor %}
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li><a class="dropdown-item" href="/alerta/fs">Excluir Imagens</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                                <br>
+                                <div><h5>Adicionar Novas Imagens</h5></div>
+                                <div>
+                                    <span class="btn btn-default btn-file">
+                                        <input id="img-scr" name="img-scr[]" type="file" class="file" multiple data-show-upload="true" data-show-caption="true">
+                                    </span>
+                                </div>
+                                 <div>
+                                    <input class="btn btn-primary btn-lg " id="submit1"
+                                       name="submit" type="submit" value="Salvar Novas Imagens">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- Cabeçalho Tira Teima -->
+                <div class="pd-20 card-box mb-30">
+                    <div class="clearfix">
+                        <div class="pull-left">
+                            <h4 class="text-blue h4">Propaganda Tira-Teima</h4>
+                            <p class="mb-30">Imagens que ocuparão a parte central da tela de Consulta de Preço</p>
+                        </div>
+                    </div>
+                    <form action=" {{url_for('gravar_central')}} " method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <div class="col-sm-9">
+                                <div> <h5> Imagens anteriores</h5></div>
+                                <div class="dropdown">
+                                    <button type="button" id="dropdownct" class="btn btn-primary btn-lg dropdown-toggle"
+                                            data-bs-toggle="dropdown"  aria-expanded="false">
+                                        {% if lct|length > 0 %}
+                                            Imagens contidas
+                                            <span class="badge bg-primary rounded-pill">{{ lct|length }}</span>
+                                        {% else %}
+                                            Não existe nenhuma imagem
+                                        {% endif %}
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownct">
+                                        {% if lct|length > 0 %}
+                                            {% for image in lct %}
+                                                <li><a class="dropdown-item disabled" href="#">{{ image }}</a></li>
+                                            {% endfor %}
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li><a class="dropdown-item" href="/alerta/ct">Excluir Imagens</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                                <br>
+                                <div><h5>Adicionar Novas Imagens</h5></div>
+                                <div>
+                                    <span class="btn btn-default btn-file">
+                                        <input id="img-central" name="img-central[]" type="file" class="file" multiple data-show-upload="true" data-show-caption="true">
+                                    </span>
+                                </div>
+                                 <div>
+                                    <input class="btn btn-primary btn-lg " id="submit2"
+                                       name="submit" type="submit" value="Salvar Novas Imagens">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="pd-20 card-box mb-30">
+                    <div class="clearfix">
+                        <div class="pull-left">
+                            <h4 class="text-blue h4">Logotipo Cliente</h4>
+                            <p class="mb-30">Imagem que ocupará o campo Logotipo</p>
+                        </div>
+                    </div>
+                    <form action=" {{url_for('gravar_logo')}} " method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <div class="col-sm-9">
+                                <div> <h5> Imagem anterior</h5></div>
+                                <div class="dropdown">
+                                    <button type="button" id="dropdownlg" class="btn btn-primary btn-lg dropdown-toggle"
+                                            data-bs-toggle="dropdown"  aria-expanded="false">
+                                        {% if llg|length > 0 %}
+                                            Imagem contida
+                                            <span class="badge bg-primary rounded-pill">{{ llg|length }}</span>
+                                        {% else %}
+                                            Não existe nenhuma imagem
+                                        {% endif %}
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownct">
+                                        {% if llg|length > 0 %}
+                                            {% for image in llg %}
+                                                <li><a class="dropdown-item disabled" href="#">{{ image }}</a></li>
+                                            {% endfor %}
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li><a class="dropdown-item" href="/alerta/lg">Excluir Imagem</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                                <br>
+                                <div><h5>Adicionar Nova Imagem</h5></div>
+                                <div>
+                                    <span class="btn btn-default btn-file">
+                                        <input id="img-lg" name="img-lg" type="file" class="file"
+                                               data-show-upload="true" data-show-caption="true">
+                                    </span>
+                                </div>
+                                 <div>
+                                    <input class="btn btn-primary btn-lg " id="submit3"
+                                       name="submit" type="submit" value="Salvar Novas Imagens">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+		</div>
+        <div class="footer-wrap pd-20 mb-20 card-box">
+				<div>
+					Mercadologic Tira-Teima mantido por
+				</div>
+				<div>
+					<a href="https://www.processasistemas.com.br" target="_blank">
+						<img src="{{ url_for('static', filename= 'images/logo_processa.png')}}" alt="Processa Sistemas" class="dark-logo">
+					</a>
+				</div>
+			</div>
+	</div>
+</div>
+{% endblock %}
