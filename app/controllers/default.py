@@ -659,10 +659,21 @@ def gravar_central():
     if request.method == "POST":
         try:
             file_central = request.files.get("img-central")
+            # Avaliar a existencia de imagens anteriores na pasta central
+            testar = lista_central()
+            if len(testar) > 0:
+                dados_dict = {'title': "Falha ao salvar imagem",
+                              'message': f"Já existe arquivo salvo para esta categoria.<p>"
+                                         f"Utilize a função <b>Excluir Imagem</b> antes de enviar uma nova!",
+                              'link': 'select_images',
+                              'btn_text': 'Voltar'
+                              }
+                log(' gravar_central - Nenhuma imagem foi enviada para Central', 'error')
+                return render_template("falha.html", dados=dados_dict)
+
             if file_central.filename != '':
                 image = secure_filename(file_central.filename)
                 file_central.save(os.path.join(app.config['UPLOAD_FOLDER'], 'central', image))
-
                 dados_dict = {'title': "Imagem salva com sucesso!",
                               'message': f"A imagem enviada <b>{file_central.filename}</b> foi salva com sucesso. <p> "
                                          f"Clique em <b>Voltar</b> para adicionar mais imagens ou em "
@@ -705,6 +716,18 @@ def gravar_logo():
     if request.method == "POST":
         try:
             file_lg = request.files.get("img-lg")
+            # Avaliar a existencia de imagens anteriores na pasta logo
+            testar = lista_logo()
+            if len(testar) > 0:
+                dados_dict = {'title': "Falha ao salvar imagem",
+                              'message': f"Já existe arquivo salvo para esta categoria.<p>"
+                                         f"Utilize a função <b>Excluir Imagem</b> antes de enviar uma nova!",
+                              'link': 'select_images',
+                              'btn_text': 'Voltar'
+                              }
+                log(' gravar_logo - Nenhuma imagem foi enviada para Central', 'error')
+                return render_template("falha.html", dados=dados_dict)
+
             if file_lg.filename != '':
                 image = secure_filename(file_lg.filename)
                 file_lg.save(os.path.join(app.config['UPLOAD_FOLDER'], 'logo', image))
