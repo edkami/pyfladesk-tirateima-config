@@ -6,6 +6,7 @@ dir_lg = os.path.join(os.getcwd(), 'app\\static\\client-img-folder\\', 'logo')
 
 
 def lista_central():
+    os.makedirs(dir_ce, exist_ok=True)
     lista = [i for i in os.listdir(dir_ce)]
     log(f' lista_central - Lista de imagem Central = {lista}', 'info')
     return lista
@@ -13,6 +14,7 @@ def lista_central():
 
 def excluir_central():
     try:
+        os.makedirs(dir_ce, exist_ok=True)
         [os.remove(os.path.join(dir_ce, i)) for i in os.listdir(dir_ce)]
         log(' excluir_central - Excluindo imagem Central', 'info')
         return True
@@ -22,6 +24,7 @@ def excluir_central():
 
 
 def lista_logo():
+    os.makedirs(dir_lg, exist_ok=True)
     lista = [i for i in os.listdir(dir_lg)]
     log(f' lista_logo - Imagem Logo = {lista}', 'info')
     return lista
@@ -29,6 +32,7 @@ def lista_logo():
 
 def excluir_logo():
     try:
+        os.makedirs(dir_lg, exist_ok=True)
         [os.remove(os.path.join(dir_lg, i)) for i in os.listdir(dir_lg)]
         log(' excluir_logo - Excluindo imagem Logo', 'info')
         return True
