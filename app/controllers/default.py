@@ -255,6 +255,20 @@ def editar_cadastro():
         return render_template("falha.html", dados=dados_dict)
 
 
+@app.route("/alerta_equipamento/<edit>")
+def alerta_equipamento(edit):
+    dados_dict = {'title': "Alerta de Exclusão!",
+                  'message': f'O sistema irá excluir definitivamente o terminal selecionado!!!'
+                             f'<p>Deseja realmente excluir?',
+                  'link_voltar': 'index',
+                  'btn_voltar': 'Não',
+                  'link_env': 'deletar_equipamento',
+                  'btn_env': 'Sim'
+                  }
+    log(' alerta - Renderização template alerta.html', 'info')
+    return render_template('alerta.html', dados=dados_dict, edit=edit)
+
+
 @app.route('/deletar_equipamento/<edit>', methods=["GET", "POST"])
 def deletar_equipamento(edit):
     try:
@@ -390,6 +404,20 @@ def editar_temporizador():
                       }
         log(f' editar_temporizador - Falha catastrófica ao cadastrar o temporizador.\n Motivo: {exc}', 'error')
         return render_template("falha.html", dados=dados_dict)
+
+
+@app.route("/alerta_temporizador/<edit>")
+def alerta_temporizador(edit):
+    dados_dict = {'title': "Alerta de Exclusão!",
+                  'message': f'O sistema irá excluir definitivamente o temporizador selecionado!!!'
+                             f'<p>Deseja realmente excluir?',
+                  'link_voltar': 'index',
+                  'btn_voltar': 'Não',
+                  'link_env': 'deletar_temporizador',
+                  'btn_env': 'Sim'
+                  }
+    log(' alerta - Renderização template alerta.html', 'info')
+    return render_template('alerta.html', dados=dados_dict, edit=edit)
 
 
 @app.route('/deletar_temporizador/<edit>', methods=["GET", "POST"])
@@ -550,6 +578,20 @@ def editar_servidor():
         return render_template("falha.html", dados=dados_dict)
 
 
+@app.route("/alerta_servidor/<edit>")
+def alerta_servidor(edit):
+    dados_dict = {'title': "Alerta de Exclusão!",
+                  'message': f'O sistema irá excluir definitivamente o servidor selecionado!!!'
+                             f'<p>Deseja realmente excluir?',
+                  'link_voltar': 'index',
+                  'btn_voltar': 'Não',
+                  'link_env': 'deletar_servidor',
+                  'btn_env': 'Sim'
+                  }
+    log(' alerta - Renderização template alerta.html', 'info')
+    return render_template('alerta.html', dados=dados_dict, edit=edit)
+
+
 @app.route('/deletar_servidor/<edit>', methods=["GET", "POST"])
 def deletar_servidor(edit):
     try:
@@ -583,8 +625,8 @@ def select_images():
     return render_template("selectimages.html", lct=lct, llg=llg)
 
 
-@app.route("/alerta/<id>")
-def alerta(id):
+@app.route("/alerta/<edit>")
+def alerta(edit):
     dados_dict = {'title': "Alerta de Exclusão!",
                   'message': f'O sistema irá excluir definitivamente a imagem anteriormente adicionada!!!'
                              f'<p>Deseja realmente excluir?',
@@ -592,14 +634,14 @@ def alerta(id):
                   'btn_voltar': 'Não',
                   'link_env': 'excluir_imagens',
                   'btn_env': 'Sim'
-                 }
+                  }
     log(' alerta - Renderização template alerta.html', 'info')
-    return render_template('alerta.html', dados=dados_dict, id=id)
+    return render_template('alerta.html', dados=dados_dict, edit=edit)
 
 
-@app.route("/excluir_imagens/<id>", methods=["GET", "POST"])
-def excluir_imagens(id):
-    if id == 'ct':
+@app.route("/excluir_imagens/<edit>", methods=["GET", "POST"])
+def excluir_imagens(edit):
+    if edit == 'ct':
         try:
             retorno = excluir_central()
             if retorno:
@@ -625,7 +667,7 @@ def excluir_imagens(id):
                           }
             log(f' excluir_imagens - Falha catastrófica ao excluir imagem Central.\n Motivo: {exc}', 'error')
             return render_template("falha.html", dados=dados_dict)
-    elif id == 'lg':
+    elif edit == 'lg':
         try:
             retorno = excluir_logo()
             if retorno:
@@ -659,6 +701,7 @@ def gravar_central():
     if request.method == "POST":
         try:
             file_central = request.files.get("img-central")
+
             # Avaliar a existencia de imagens anteriores na pasta central
             testar = lista_central()
             if len(testar) > 0:
@@ -680,7 +723,7 @@ def gravar_central():
                                          f"<b>Enviar</b> para fazer o envio",
                               'btn_voltar': 'Voltar',
                               'link_voltar': 'select_images',
-                              'btn_env': 'Enviar Carga',
+                              'btn_env': 'Enviar Configuração',
                               'link_env': 'enviar_config'
                               }
                 log(' gravar_central - Imagem Central salva com sucesso', 'info')
@@ -716,6 +759,7 @@ def gravar_logo():
     if request.method == "POST":
         try:
             file_lg = request.files.get("img-lg")
+
             # Avaliar a existencia de imagens anteriores na pasta logo
             testar = lista_logo()
             if len(testar) > 0:
@@ -737,7 +781,7 @@ def gravar_logo():
                                          f"<b>Enviar</b> para fazer o envio",
                               'btn_voltar': 'Voltar',
                               'link_voltar': 'select_images',
-                              'btn_env': 'Enviar Carga',
+                              'btn_env': 'Enviar Configuração',
                               'link_env': 'enviar_config'
                               }
                 log(' gravar_logo - Imagem Logo salva com sucesso', 'info')

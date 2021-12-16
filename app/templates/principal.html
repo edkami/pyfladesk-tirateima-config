@@ -19,7 +19,7 @@
 				</div>
 			</div>
 			<div class="card-box mb-30">
-				<h2 class="h4 pd-20">Equipamentos</h2>
+				<h2 class="h4 pd-20">Terminais</h2>
 				<div class="table-responsive">
 					<table class="table nowrap">
 						<thead>
@@ -66,7 +66,7 @@
 										<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 											<a class="dropdown-item" href="{{ url_for('view_log', end_ip=bp.endereco_ip, terminal=bp.equipamento) }}"><i class="dw dw-edit1"></i> Visualizar Log </a>
 											<a class="dropdown-item" href="{{ url_for('busca_edit', edit=bp.equipamento) }}"><i class="dw dw-edit2"></i> Editar registro </a>
-											<a class="dropdown-item" href="{{ url_for('deletar_equipamento', edit=bp.equipamento) }}"><i class="dw dw-delete-3"></i> Excluir registro</a>
+											<a class="dropdown-item" href="{{ url_for('alerta_equipamento', edit=bp.equipamento) }}"><i class="dw dw-delete-3"></i> Excluir registro</a>
 										</div>
 									</div>
 								</td>
@@ -110,7 +110,7 @@
 										</a>
 										<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 											<a class="dropdown-item" href="{{url_for('busca_servidor', edit=bsi.descricao)}}"><i class="dw dw-edit2"></i> Editar registro </a>
-											<a class="dropdown-item" href="{{ url_for('deletar_servidor', edit=bsi.descricao) }}"><i class="dw dw-delete-3"></i> Excluir registro</a>
+											<a class="dropdown-item" href="{{ url_for('alerta_servidor', edit=bsi.descricao) }}"><i class="dw dw-delete-3"></i> Excluir registro</a>
 										</div>
 									</div>
 								</td>
@@ -146,7 +146,7 @@
 										</a>
 										<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 											<a class="dropdown-item" href="{{url_for('busca_temporizador', edit=bti.temp_nome)}}"><i class="dw dw-edit2"></i> Editar registro </a>
-											<a class="dropdown-item" href="{{url_for('deletar_temporizador', edit=bti.temp_nome)}}"><i class="dw dw-delete-3"></i> Excluir registro</a>
+											<a class="dropdown-item" href="{{url_for('alerta_temporizador', edit=bti.temp_nome)}}"><i class="dw dw-delete-3"></i> Excluir registro</a>
 										</div>
 									</div>
 								</td>

@@ -48,9 +48,8 @@
 												<i class="dw dw-more"></i>
 											</a>
 											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-												<a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
 												<a class="dropdown-item" href="{{url_for('busca_temporizador', edit=bti.temp_nome)}}"><i class="dw dw-edit2"></i> Editar registro </a>
-												<a class="dropdown-item" href="{{url_for('deletar_temporizador', edit=bti.temp_nome)}}"><i class="dw dw-delete-3"></i> Excluir registro</a>
+												<a class="dropdown-item" href="{{url_for('alerta_temporizador', edit=bti.temp_nome)}}"><i class="dw dw-delete-3"></i> Excluir registro</a>
 											</div>
 										</div>
 									</td>
@@ -93,7 +92,8 @@
 												<i class="dw dw-more"></i>
 											</a>
 											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-												<a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
+												<a class="dropdown-item" href="{{url_for('busca_servidor', edit=bsi.descricao)}}"><i class="dw dw-edit2"></i> Editar registro </a>
+												<a class="dropdown-item" href="{{ url_for('alerta_servidor', edit=bsi.descricao) }}"><i class="dw dw-delete-3"></i> Excluir registro</a>
 											</div>
 										</div>
 									</td>
