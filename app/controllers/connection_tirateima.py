@@ -75,6 +75,7 @@ def dados_lidos(ip, tipo_equipamento):
     """
     Função irá ler os dados enviados pelo terminal.
     :param ip:endereço ip do terminal
+    :param tipo tipo_equipamento: 1 - PC 2 - Raspberry
     :return:
     """
     # Conectar ao banco de dados
@@ -86,7 +87,7 @@ def dados_lidos(ip, tipo_equipamento):
         if tipo_equipamento == 1:
             engine = create_engine(f'mysql+mysqldb://{user}:{passwd}@{ip}/{bd}')
         else:
-            engine = create_engine(f'mariadb+mariadbconnector://{user}:{passwd}@{ip}/{bd}')
+            engine = create_engine(f'mysql+mysqldb://{user}:{passwd}@{ip}/{bd}')
         meta = MetaData(engine)
         tb_leitor = Table('leitor', meta, autoload=True, autoload_with=engine)
         conn = engine.connect()
